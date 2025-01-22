@@ -32,8 +32,6 @@ class CreateCursosTable extends Migration
             $table->unsignedBigInteger('id_docente');
             $table->timestamps();
 
-            // Foreign key constraint
-            $table->foreign('id_docente')->references('id')->on('docentes')->onDelete('cascade');
         });
     }
 
