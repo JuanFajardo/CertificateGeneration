@@ -24,11 +24,6 @@
                     <td>
                         <a href="{{ route('cursos.show', $curso) }}">Ver</a>
                         <a href="{{ route('cursos.edit', $curso) }}">Editar</a>
-                        <form action="{{ route('cursos.destroy', $curso) }}" method="POST" style="display: inline;">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit">Eliminar</button>
-                        </form>
                     </td>
                 </tr>
             @endforeach

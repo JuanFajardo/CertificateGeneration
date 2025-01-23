@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\Models\Curso;
+use App\Models\Docente;
 use Illuminate\Http\Request;
 
 class CursoController extends Controller
@@ -14,7 +15,8 @@ class CursoController extends Controller
 
     public function create()
     {
-        return view('cursos.create');
+        $docentes = Docente::all();
+        return view('cursos.create', compact('docentes'));
     }
 
     public function store(Request $request)
@@ -25,7 +27,6 @@ class CursoController extends Controller
         ]);
 
         Curso::create($request->all());
-
         return redirect()->route('cursos.index')->with('success', 'Curso creado exitosamente.');
     }
 
