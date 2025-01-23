@@ -9,65 +9,52 @@ class CursoController extends Controller
     public function index()
     {
         $cursos = Curso::all();
-        return response()->json($cursos);
+        return view('cursos.index', compact('cursos'));
+    }
+
+    public function create()
+    {
+        return view('cursos.create');
     }
 
     public function store(Request $request)
     {
-        $validated = $request->validate([
-            'titulo' => 'required|string|max:255',
-            'id_docente' => 'required|exists:docentes,id',
-            'imagen' => 'nullable|string|max:255',
-            'descripcion_corta' => 'nullable|string',
-            'fecha_inicio' => 'nullable|date',
-            'fecha_fin' => 'nullable|date',
-            'carga_horario' => 'nullable|integer',
-            'inversion' => 'nullable|numeric',
-            'modalidad' => 'nullable|in:presencial,virtual,mixta',
-            'horarios' => 'nullable|string|max:255',
-            'fecha_limite' => 'nullable|date',
-            'correo' => 'nullable|string|email|max:255',
-            'celular' => 'nullable|string|max:15',
-            'descripcion_larga' => 'nullable|string',
-            'requisitos' => 'nullable|string',
+        $request->validate([
+            'titulo' => 'required|max:255',
+            'id_docente' => 'required|integer',
         ]);
 
-        $curso = Curso::create($validated);
-        return response()->json($curso, 201);
+        Curso::create($request->all());
+
+        return redirect()->route('cursos.index')->with('success', 'Curso creado exitosamente.');
     }
 
     public function show(Curso $curso)
     {
-        return response()->json($curso);
+        return view('cursos.show', compact('curso'));
+    }
+
+    public function edit(Curso $curso)
+    {
+        return view('cursos.edit', compact('curso'));
     }
 
     public function update(Request $request, Curso $curso)
     {
-        $validated = $request->validate([
-            'titulo' => 'nullable|string|max:255',
-            'id_docente' => 'nullable|exists:docentes,id',
-            'imagen' => 'nullable|string|max:255',
-            'descripcion_corta' => 'nullable|string',
-            'fecha_inicio' => 'nullable|date',
-            'fecha_fin' => 'nullable|date',
-            'carga_horario' => 'nullable|integer',
-            'inversion' => 'nullable|numeric',
-            'modalidad' => 'nullable|in:presencial,virtual,mixta',
-            'horarios' => 'nullable|string|max:255',
-            'fecha_limite' => 'nullable|date',
-            'correo' => 'nullable|string|email|max:255',
-            'celular' => 'nullable|string|max:15',
-            'descripcion_larga' => 'nullable|string',
-            'requisitos' => 'nullable|string',
+        $request->validate([
+            'titulo' => 'required|max:255',
+            'id_docente' => 'required|integer',
         ]);
 
-        $curso->update($validated);
-        return response()->json($curso);
+        $curso->update($request->all());
+
+        return redirect()->route('cursos.index')->with('success', 'Curso actualizado exitosamente.');
     }
 
     public function destroy(Curso $curso)
     {
         $curso->delete();
-        return response()->json(['message' => 'Curso eliminado correctamente']);
+
+        return redirect()->route('cursos.index')->with('success', 'Curso eliminado exitosamente.');
     }
 }
