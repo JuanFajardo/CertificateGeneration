@@ -32,12 +32,14 @@ class CursoController extends Controller
 
     public function show(Curso $curso)
     {
-        return view('cursos.show', compact('curso'));
+        $docente = Docente::find($curso->id_docente);
+        return view('cursos.show', compact('curso', 'docente'));
     }
 
     public function edit(Curso $curso)
     {
-        return view('cursos.edit', compact('curso'));
+        $docentes = Docente::all();
+        return view('cursos.edit', compact('curso', 'docentes'));
     }
 
     public function update(Request $request, Curso $curso)

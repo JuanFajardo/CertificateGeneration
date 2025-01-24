@@ -71,7 +71,7 @@
 
     <div class="mb-3">
         <strong>Docente:</strong>
-        <p>{{ $curso->docente->docente }}</p>
+        <p>{{ $docente->docente }}</p>
     </div>
 
     @if($curso->imagen)
